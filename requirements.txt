@@ -1,0 +1,83 @@
+# # 默认环境
+# tensorflow==1.10.0  # gpu/cpu版本   cuda9.0  cudnn7.6.3.30
+# keras==2.2.0
+# h5py==2.8.0 # 高了会报错decode error
+# numpy==1.15.0
+
+# test2环境
+tensorflow==1.4.0  # gpu/cpu版本   cuda8.0  cudnn6.0   python3.6.13
+keras==2.1.6   # 使用的不是网上的匹配版本，匹配的keras版本太低，会有amsgrad参数报错
+h5py==2.8.0
+numpy==1.15.0
+matplotlib==3.3.4
+pydotplus==2.0.2
+# 报错：
+    # 1、导入包很多报错，多为有关tensorflow.keras的
+    #   解决：keras路径有问题，改成了tensorflow.python.keras，部分路劲改成了tensorflow.python._ipml下的某某库
+    # 2、softmax() got an unexpected keyword argument ‘axis‘
+    #   解决：修改site-packages\keras\backend\tensorflow_backend.py 的2963行，return tf.nn.softmax(x, axis=axis) 修改为 return tf.nn.softmax(x, dim=axis)
+    # 3、TypeError: `pred` must be a Tensor, a Variable, or a Python bool. 
+    #   解决：将zonghe.py中的tensorflow.keras下的load_model修改成使用keras.models.load_model
+    # 4、TypeError: Unexpected keyword argument passed to optimizer: amsgrad
+    #   解决：keras版本太低，修改成2.1.6
+    # 5、AttributeError: 'int' object has no attribute 'append'
+    #   解决：有两个变量初始值为0，对其append会报错，修改为[]
+    # 6、 ValueError: Tensor Tensor("input_1:0", shape=(?, 32, 32, 2), dtype=float32) is not an element of this graph.
+    #   gpt：这个错误通常发生在你尝试在一个与 Tensor 创建时不同的 TensorFlow 图中使用该 Tensor。在 TensorFlow 中，每个 Tensor 都属于一个特定的图（Graph）。如果你在一个图中创建了一个 Tensor，
+    #        然后尝试在另一个图中使用它，就会出现这个错误。
+    #   解决：resnet50.py下的kaishi()图的创建有问题，修改成正确的图的创建方式
+    #   def kaishi():
+    #    graph = tf.Graph()
+    #    with graph.as_default():
+    #        model = ResNet50(input_shape = (32, 32, 2), classes = 8)
+    #        model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+    #        X_train, Y_train = bigbatch.pre()
+    #        X_val, Y_val = bbbbb.pre()
+    #        for i in range(16):
+    #            p=[]
+    #            q=[]
+    #            model.fit(X_train, Y_train, epochs = 1, batch_size = 64)
+    #            history=model.evaluate(X_val, Y_val, batch_size=64)
+    #            p.append(history[1])
+    #            q.append(i)
+    #            # ... rest of your code ...
+
+
+# 所有包
+# bleach                 1.5.0
+# cachetools             4.2.4
+# certifi                2021.5.30
+# colorama               0.4.5
+# cycler                 0.11.0
+# dataclasses            0.8
+# enum34                 1.1.10
+# h5py                   2.8.0
+# html5lib               0.9999999
+# importlib-metadata     4.8.3
+# Keras                  2.1.6
+# kiwisolver             1.3.1
+# Markdown               3.3.7
+# matplotlib             3.3.4
+# numpy                  1.15.0
+# nvidia-ml-py           11.525.150
+# nvitop                 1.0.0
+# Pillow                 8.4.0
+# pip                    21.2.2
+# protobuf               3.19.6
+# psutil                 5.9.8
+# pydotplus              2.0.2
+# pyparsing              3.1.2
+# python-dateutil        2.9.0.post0
+# PyYAML                 6.0.1
+# scipy                  1.5.4
+# setuptools             58.0.4
+# six                    1.16.0
+# tensorflow-gpu         1.4.0
+# tensorflow-tensorboard 0.4.0
+# termcolor              1.1.0
+# typing_extensions      4.1.1
+# Werkzeug               2.0.3
+# wheel                  0.37.1
+# wincertstore           0.2
+# windows-curses         2.3.3
+# zipp                   3.6.0
